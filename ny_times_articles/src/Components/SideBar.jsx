@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
 import "./SideBar.css";
 
-const SideBar = ({ SortChange, TimeChange}) => {
+const SideBar = ({ SortChange, TimeChange, AmountChange}) => {
     const [inputValue, setInputValue] = useState("");
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
+
+    const handleKeyPress = () => {
+      AmountChange(inputValue);
       };
-      const handleButtonClick = () => {
-        const num = parseInt(inputValue);
-        if (!isNaN(num) && num >= 1 && num <= 15) {
-          console.log("Valid input:", num);
-        } else {
-          alert("Please enter a number between 1 and 15");
-        }
-      };
+
   return (
     <div className="options">
         <div className="text-entry">
         <input
           type="text"
           placeholder="Enter a value 1 - 15"
+          onChange={(event) => setInputValue(event.target.value)}
           value={inputValue}
-          onChange={handleInputChange}
         />
-        <button onClick={handleButtonClick}>Enter</button>
+        <button
+        onClick={handleKeyPress}>ENTER</button>
       </div>
       <span className="filter">Filter</span>
       <span className="sortby-timeframe">Sort By:</span>
