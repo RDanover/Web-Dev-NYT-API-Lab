@@ -1,0 +1,41 @@
+.options{
+    background-color: white;
+    min-width: 200px;
+    width: 200px;
+    min-height: 350px;
+    height:350px;
+    border-radius: 25px;
+    margin-left: 10px;
+    margin-top:50px;
+    display:flex;
+    flex-direction: column;
+}
+
+.text-entry{
+    width:75%;
+    border-radius: 25px;
+    color:lightgrey;
+    margin-top:10px;
+    margin-left:25px;
+    display:flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.filter{
+    margin-top:10px; 
+    margin-left:10px;
+    font-weight:bold;  
+    font-size: 24px;
+}
+
+.sortby-timeframe{
+    margin-top:10px; 
+    margin-left:15px; 
+    font-size: 20px;
+}
+
+.radio-button{
+    margin-left:20px; 
+}
