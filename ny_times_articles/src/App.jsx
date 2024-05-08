@@ -13,22 +13,18 @@ const App = () =>{
     const [evenArticlesData, setEvenArticles] = useState([])
     const [oddArticlesData, setOddArticles] = useState([])
 
-    const handleSortChange = async(option) => {
+    const handleSortChange = (option) => {
         setSortOption(option);
-        getArticles();
       };
 
-    const handleTimeChange = async(option) => {
+    const handleTimeChange = (option) => {
         setTimeOption(option);
-        getArticles();
       };
 
-    const handleAmountChange = async(option) =>{
+    const handleAmountChange = (option) =>{
         const num = parseInt(option);
         if (!isNaN(num) && num >= 1 && num <= 15) {
           setAmountOption(option);
-          getArticles();
-          alert(num+" articles fetched");
         } else {
           alert("Please enter a number between 1 and 15");
         }
@@ -136,7 +132,7 @@ const App = () =>{
 
       useEffect(() => {
         getArticles();
-      }, [oddArticlesData,evenArticlesData]); //fetches default articles when page loads and when odd and even articles are update
+      }, [sortOption,timeOption,amountOption]); //get articles when the values are updated, including default values 
 
   return (
     <div className="App">

@@ -11,15 +11,15 @@ const SideBar = ({ SortChange, TimeChange, AmountChange}) => {
   return (
     <div className="options">
         <div className="text-entry">
-        <input
-          type="text"
-          placeholder="Enter a value 1 - 15"
-          onChange={(event) => setInputValue(event.target.value)}
-          value={inputValue}
-        />
-        <button
-        onClick={handleKeyPress}>ENTER</button>
-      </div>
+          <input
+            type="text"
+            placeholder="Enter a value 1 - 15"
+            onChange={(event) => setInputValue(event.target.value)}
+            value={inputValue}
+          />
+          <button
+          onClick={handleKeyPress}>ENTER</button>
+        </div>      
       <span className="filter">Filter</span>
       <span className="sortby-timeframe">Sort By:</span>
       <label className="radio-button">
