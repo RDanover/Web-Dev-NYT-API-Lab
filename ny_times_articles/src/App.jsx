@@ -1,4 +1,3 @@
-//TO DO: Implement Pagination
 import './App.css';
 import { useState, useEffect } from 'react';
 import Article from './Components/Article';
@@ -10,12 +9,34 @@ const App = () =>{
     const [sortOption, setSortOption] = useState("Most Viewed");
     const [timeOption, setTimeOption] = useState("Day");
     const [amountOption, setAmountOption] = useState("6");
-    const [evenArticlesData, setEvenArticles] = useState([])
-    const [oddArticlesData, setOddArticles] = useState([])
+    const [evenArticlesData, setEvenArticles] = useState([]);
+    const [oddArticlesData, setOddArticles] = useState([]);
+    const [oddArticlesDataPg1, setOddArticlesPg1] = useState([]);
+    const [evenArticlesDataPg1, setEvenArticlesPg1] = useState([]);
+    const [oddArticlesDataPg2, setOddArticlesPg2] = useState([]);
+    const [evenArticlesDataPg2, setEvenArticlesPg2] = useState([]);
+    const [oddArticlesDataPg3, setOddArticlesPg3] = useState([]);
+    const [evenArticlesDataPg3, setEvenArticlesPg3] = useState([]);
+    const [articleCount,setArticleCount] = useState(6);
 
     const handleSortChange = (option) => {
         setSortOption(option);
       };
+
+    const handleCurrentPageChange = (option) =>{
+        if(option==1){
+          setOddArticles(oddArticlesDataPg1);
+          setEvenArticles(evenArticlesDataPg1);
+        }
+        else if(option==2){
+          setOddArticles(oddArticlesDataPg2);
+          setEvenArticles(evenArticlesDataPg2);
+        }
+        else{
+          setOddArticles(oddArticlesDataPg3);
+          setEvenArticles(evenArticlesDataPg3);
+        }
+    }
 
     const handleTimeChange = (option) => {
         setTimeOption(option);
@@ -68,8 +89,12 @@ const App = () =>{
           const data = await response.json();
   
           console.log(data); // you can view if a response went through in developer mode. 
-          var odd_articles = [];
-          var even_articles = [];
+          var odd_articles_pg1 = [];
+          var even_articles_pg1 = [];
+          var odd_articles_pg2 = [];
+          var even_articles_pg2 = [];
+          var odd_articles_pg3 = [];
+          var even_articles_pg3 = [];
           if (data.results && data.results.length > 0) {
             var i = -1;
             var article_count = -1;
@@ -77,6 +102,7 @@ const App = () =>{
             var article_abstract;
             var article_date;
             var article_image_url;
+            setArticleCount(amountOption);
             while(article_count+1 < amountOption){
                 try{
                     i++;
@@ -99,7 +125,7 @@ const App = () =>{
                 }
                 catch(error){
                     article_title = "Article not available";
-                    article_image_url = {default_img};
+                    article_image_url = default_img;
                     article_date = "0000-00-00";
                     article_abstract = error.message;
                     console.error("Error occurred while processing article:", error.message);
@@ -113,17 +139,41 @@ const App = () =>{
                   img_url: article_image_url,
                   number:article_count+1
                 };
-
+                
                 if(i%2===0){//since i=0 when article # = 1
-                  odd_articles.push(article);
+                  //odd_articles.push(article);
+                  if(i<=5){//if its stupid and it works its not stupid
+                    odd_articles_pg1.push(article);
+                  }
+                  else if(i<=11){
+                    odd_articles_pg2.push(article);
+                  }
+                  else{
+                    odd_articles_pg3.push(article);
+                  }
                 }
                 else{
-                  even_articles.push(article);
+                  if(i<=5){
+                    even_articles_pg1.push(article);
+                  }
+                  else if(i<=11){
+                    even_articles_pg2.push(article);
+                  }
+                  else{
+                    even_articles_pg3.push(article);
+                  }
                 }
                 
             }
-            setOddArticles(odd_articles); 
-            setEvenArticles(even_articles);
+            setOddArticlesPg1(odd_articles_pg1);
+            setEvenArticlesPg1(even_articles_pg1);
+            setOddArticlesPg2(odd_articles_pg2);
+            setEvenArticlesPg2(even_articles_pg2);
+            setOddArticlesPg3(odd_articles_pg3);
+            setEvenArticlesPg3(even_articles_pg3);
+
+            setOddArticles(odd_articles_pg1); //sets default to page 1
+            setEvenArticles(even_articles_pg1);
           } 
         else {
             console.log("No articles found.");
@@ -132,7 +182,7 @@ const App = () =>{
 
       useEffect(() => {
         getArticles();
-      }, [sortOption,timeOption,amountOption]); //get articles when the values are updated, including default values 
+      }, [sortOption,timeOption,amountOption]); //get articles when the values are updated, including default values
 
   return (
     <div className="App">
@@ -140,28 +190,35 @@ const App = () =>{
         <Title titleL={sortOption} titleR={timeOption}/>
         <div className = "content">
           <SideBar SortChange={handleSortChange} TimeChange={handleTimeChange} AmountChange={handleAmountChange}/>
-          <div className = "articles">
-            <div className = "article-column" id='Left-Column'>
-              {oddArticlesData.map((article, index) => (
-                                <Article
-                                    number={article.number}
-                                    date={article.date}
-                                    abs={article.abs}
-                                    img_url={article.img_url}
-                                    title={article.title}
-                                />
-                            ))}
+          <div className="articles-button-container">
+            <div className = "articles">
+              <div className = "article-column" id='Left-Column'>
+                {oddArticlesData.map((article, index) => (
+                                  <Article
+                                      number={article.number}
+                                      date={article.date}
+                                      abs={article.abs}
+                                      img_url={article.img_url}
+                                      title={article.title}
+                                  />
+                              ))}
+              </div>
+              <div className = "article-column" id='Right-Columns'>
+              {evenArticlesData.map((article, index) => (
+                                  <Article
+                                      number={article.number}
+                                      date={article.date}
+                                      abs={article.abs}
+                                      img_url={article.img_url}
+                                      title={article.title}
+                                  />
+                              ))}
+              </div>
             </div>
-            <div className = "article-column" id='Right-Columns'>
-            {evenArticlesData.map((article, index) => (
-                                <Article
-                                    number={article.number}
-                                    date={article.date}
-                                    abs={article.abs}
-                                    img_url={article.img_url}
-                                    title={article.title}
-                                />
-                            ))}
+            <div className='buttons'>
+              <button onClick={() => handleCurrentPageChange(1)}>1</button>
+              {articleCount >= 7 && <button onClick={() => handleCurrentPageChange(2)}>2</button>}
+              {articleCount >= 13 && <button onClick={() => handleCurrentPageChange(3)}>3</button>} 
             </div>
           </div>
         </div>

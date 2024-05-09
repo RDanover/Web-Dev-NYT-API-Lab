@@ -19,6 +19,18 @@
   justify-content: space-between;
 }
 
+.articles-button-container{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .articles{
     margin-top:50px;
     margin-right:10px;
