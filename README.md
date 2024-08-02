@@ -1,3 +1,5 @@
+*API key has been revoked. To restore full functionality please visit https://developer.nytimes.com to retrieve an api key*
+
 How to run:
 </br>
 1. download zip
@@ -13,4 +15,4 @@ How to run:
 
 Video Demo:
 </br>
-https://youtu.be/ZLTyAUlNmXM
+https://youtu.be/LEagUiqNkjk
