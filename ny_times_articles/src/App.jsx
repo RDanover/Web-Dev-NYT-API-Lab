@@ -52,7 +52,7 @@ const App = () =>{
     };
 
       const getArticles = async () => {
-        var key = 'VimoDG1qozWj4hmfMfLa7jvp050RhDzQ';
+        var key = 'API Key Here';
         var time_frame_selection;
         var sort_by_selection;
 
